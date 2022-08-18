@@ -1,13 +1,15 @@
 import asyncio
 
 from aiogram import Bot, Dispatcher
-from decouple import config
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from loguru import logger
 
+from config import load_config
 from filters import IsCustomFilter
+
+conf = load_config("config.ini")
 
 # Configure logger
 logger.add("./Bot.log", level="DEBUG",
@@ -15,10 +17,10 @@ logger.add("./Bot.log", level="DEBUG",
             colorize=True)
 
 # init Bot and Db session
-bot = Bot(token=config('BOT_TOKEN'), parse_mode="MarkDown")
+bot = Bot(token=conf.bot.token, parse_mode="MarkdownV2")
 dp = Dispatcher(bot)
 
-DB_url = config("URL_DB")
+DB_url = conf.db.db_url
 engine = create_engine(DB_url)
 model = declarative_base()
 DB_session = sessionmaker(bind=engine)

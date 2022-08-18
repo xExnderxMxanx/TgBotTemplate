@@ -14,7 +14,6 @@ loguru
 Mako
 MarkupSafe
 multidict
-python-decouple
 pytz
 SQLAlchemy
 yarl
